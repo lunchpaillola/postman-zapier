@@ -44,11 +44,27 @@ module.exports = {
       };
       const promise = z.request(request);
       return promise.then(response => {
-        if (response.status !== 200) {
+        if (response.status === 200) {
+        // Parse the response JSON to access user data
+        const data = z.JSON.parse(response.content);
+        const username = data.user.username;
+        const teamName = data.user.teamName;
+        // Return an object containing the username and teamName for the connection label
+        return { 
+          username: username, 
+          teamName: teamName 
+        }; 
+         }else{ 
           throw new Error('Invalid API Key');
         }
       });
-    }
-  }
+    },
+
+    connectionLabel: '{{username}} @ {{teamName}}'
+  },
+
+  beforeRequest: [
+    addApiKeyToHeader 
+  ],
 
 };

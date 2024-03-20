@@ -1,13 +1,13 @@
+
 // triggers on a new collection with a certain tag
 const perform = async (z, bundle) => {
   const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    params: {
-      tag: bundle.inputData.tagName
-    }
+    url: 'https://api.getpostman.com/collections',
+    method: "GET",
+ 
   });
   // this should return an array of objects
-  return response.data;
+  return response.data.collections;
 };
 
 module.exports = {
@@ -32,8 +32,13 @@ module.exports = {
     // from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
     // returned records, and have obvious placeholder values that we can show to any user.
     sample: {
-      id: 1,
-      name: 'Test'
+      id: "example_id",
+      name: "Example Collection",
+      owner: "example_owner",
+      createdAt: "2020-01-01T00:00:00Z",
+      updatedAt: "2020-01-02T00:00:00Z",
+      uid: "example_uid",
+      isPublic: true,
     },
 
     // If fields are custom to each user (like spreadsheet columns), `outputFields` can create human labels
