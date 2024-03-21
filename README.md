@@ -20,7 +20,6 @@ The code repository is a vital component of this integration. It serves as a hub
 ### Repository Overview
 - **`/triggers`**: Contains the logic for detecting new live Postman collections.
 - **`/tests`**: Houses tests to ensure the trigger's functionality and reliability.
-- **`/docs`**: Provides detailed documentation on the trigger's setup, use cases, and troubleshooting tips.
 
 ### Contributing
 Your contributions are welcome! If you'd like to improve the integration or suggest new features, please fork the repository, apply your changes, and submit a pull request. Your insights and enhancements are valuable to the community.
