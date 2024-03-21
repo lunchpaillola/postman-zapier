@@ -13,8 +13,6 @@ describe('Authentication', () => {
       apiKey: process.env.API_KEY,
     }, };
     const authTestResult = await appTester(App.authentication.test, bundle);
-
-    console.log('Auth Test Result:', authTestResult);
     expect(authTestResult)?.toBeDefined();
   });
 });
