@@ -46,9 +46,14 @@ module.exports = {
     // https://github.com/zapier/zapier-platform/tree/main/packages/cli#customdynamic-fields
     // Alternatively, a static field definition can be provided, to specify labels for the fields
     outputFields: [
-      // these are placeholders to match the example `perform` above
-      // {key: 'id', label: 'Person ID'},
-      // {key: 'name', label: 'Person Name'}
+      { key: 'id', label: 'ID', helpText: 'The unique identifier for the collection.' },
+      { key: 'name', label: 'Collection Name', helpText: 'The name of the collection.' },
+      { key: 'owner', label: 'Owner', helpText: 'The owner of the collection.' },
+      { key: 'createdAt', label: 'Created At', type: 'datetime', helpText: 'The date and time when the collection was created.' },
+      { key: 'updatedAt', label: 'Updated At', type: 'datetime', helpText: 'The date and time when the collection was last updated.' },
+      { key: 'uid', label: 'UID', helpText: 'The unique identifier for the collection in Postman.', primary: true },
+      { key: 'isPublic', label: 'Is Public', type: 'boolean', helpText: 'Indicates whether the collection is public or private.' }
     ]
+    
   }
 };
