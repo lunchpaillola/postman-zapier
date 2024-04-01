@@ -39,4 +39,4 @@ To run this repository locally:
 
 ## Support
 
-Should you encounter any issues or have suggestions for improvement, please feel free to open an issue in the repository. Our community is active, and we strive to address queries and feedback promptly.
+Should you encounter any issues or have suggestions for improvement, please feel free to open an issue in the repository.
