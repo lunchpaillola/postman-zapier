@@ -1,7 +1,6 @@
 const perform = async (z, bundle) => {
   const currentTime = new Date();
   const lastPoll = await z.cursor.get();
-  z.console.log("lastPoll", lastPoll);
   const pollingFrequency = bundle.inputData.polling_frequency || "default";
 
   let shouldPoll = false;
@@ -26,7 +25,6 @@ const perform = async (z, bundle) => {
   }
 
   if (shouldPoll) {
-    z.console.log("Running should poll");
     try {
       const response = await z.request({
         url: "https://api.getpostman.com/collections",
@@ -34,7 +32,6 @@ const perform = async (z, bundle) => {
       });
       // Update the cursor with the current time after a successful poll
       await z.cursor.set(currentTime.toISOString());
-      z.console.log("Set currentTime", currentTime.toISOString());
       return response.data.collections;
     } catch (error) {
       // Log and rethrow the error
@@ -44,7 +41,6 @@ const perform = async (z, bundle) => {
     // Re-set the cursor to the lastPoll time to keep it from expiring
     if (lastPoll) {
       await z.cursor.set(lastPoll);
-      z.console.log("Re-set lastPoll", lastPoll);
     }
     return [];
   }
