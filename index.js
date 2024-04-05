@@ -41,7 +41,7 @@ const authentication = {
     },
   ],
   test: test,
-  connectionLabel: "{{username}} @ {{teamName}}",
+  connectionLabel: "{{username}}",
 };
 
 module.exports = {
