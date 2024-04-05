@@ -1,70 +1,61 @@
 const getCollection = require("./triggers/collection");
+
+const test = (z, bundle) => {
+  return z
+    .request({
+      url: "https://api.getpostman.com/me",
+      headers: {
+        "X-Api-Key": bundle.authData.apiKey,
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        const data = z.JSON.parse(response.content);
+        const username = data.user.username;
+        return {
+          username: username,
+        };
+      }
+      // If the response is not 200, throw an error
+      throw new z.errors.Error("Invalid API Key", response.status);
+    });
+};
+
 const addApiKeyToHeader = (request, z, bundle) => {
   if (bundle.authData.apiKey) {
-  request.headers['X-Api-Key'] = bundle.authData.apiKey;
+    request.headers["X-Api-Key"] = bundle.authData.apiKey;
   }
-  return request
-}
+  return request;
+};
+
+const authentication = {
+  type: "custom",
+  fields: [
+    {
+      key: "apiKey",
+      label: "API key",
+      required: true,
+      helpText:
+        "Find the API Key in your [app settings page](https://postman.co/settings/me/api-keys)",
+    },
+  ],
+  test: test,
+  connectionLabel: "{{username}} @ {{teamName}}",
+};
 
 module.exports = {
   // This is just shorthand to reference the installed dependencies you have.
   // Zapier will need to know these before we can upload.
-  version: require('./package.json').version,
-  platformVersion: require('zapier-platform-core').version,
+  version: require("./package.json").version,
+  platformVersion: require("zapier-platform-core").version,
+
+  //authenticating with Postman
+  authentication: authentication,
+
+  beforeRequest: [addApiKeyToHeader],
 
   // If you want your trigger to show up, you better include it here!
   triggers: {
-    [getCollection.key]: getCollection
+    [getCollection.key]: getCollection,
   },
-
-  // If you want your searches to show up, you better include it here!
-  searches: {},
-
-  // If you want your creates to show up, you better include it here!
-  creates: {},
-
-  resources: {},
-
-  authentication: {
-    type: 'custom',
-    fields: [
-      {
-        key: 'apiKey',
-        label: 'API Key',
-        required: true,
-        helpText: 'Find the API Key in your [app settings page](https://postman.co/settings/me/api-keys)',
-      },
-    ],
-    test: (z, bundle) => {
-      const request = {
-        url: 'https://api.getpostman.com/me',
-        headers: {
-          'X-Api-Key': bundle.authData.apiKey 
-        }
-      };
-      const promise = z.request(request);
-      return promise.then(response => {
-        if (response.status === 200) {
-        // Parse the response JSON to access user data
-        const data = z.JSON.parse(response.content);
-        const username = data.user.username;
-        const teamName = data.user.teamName;
-        // Return an object containing the username and teamName for the connection label
-        return { 
-          username: username, 
-          teamName: teamName 
-        }; 
-         }else{ 
-          throw new Error('Invalid API Key');
-        }
-      });
-    },
-
-    connectionLabel: '{{username}} @ {{teamName}}'
-  },
-
-  beforeRequest: [
-    addApiKeyToHeader 
-  ],
-
 };
