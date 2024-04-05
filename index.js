@@ -12,15 +12,13 @@ const test = (z, bundle) => {
       if (response.status === 200) {
         const data = z.JSON.parse(response.content);
         const username = data.user.username;
-        return { username };
-      } else {
-        const errorMessage = z.JSON.parse(response.content).error.message;
-        throw new Error(errorMessage); // Simplified error message
+        return {
+          username: username,
+        };
       }
-    })
-    .catch((error) => {
-      // Catching and re-throwing the error with just the message
-      throw new Error(error.message);
+      // Parsing the error message from the response content
+      const errorMessage = z.JSON.parse(response.content).error.message;
+      throw new z.errors.Error(`Authentication failed: ${errorMessage}`);
     });
 };
 
