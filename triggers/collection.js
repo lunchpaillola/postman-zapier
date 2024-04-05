@@ -35,7 +35,7 @@ const perform = async (z, bundle) => {
       return response.data.collections;
     } catch (error) {
       // Log and rethrow the error
-      throw new Error("Failed to fetch collections.");
+      throw new z.errors.Error("Failed to fetch collections.");
     }
   } else {
     // Re-set the cursor to the lastPoll time to keep it from expiring

@@ -12,12 +12,15 @@ const test = (z, bundle) => {
       if (response.status === 200) {
         const data = z.JSON.parse(response.content);
         const username = data.user.username;
-        return {
-          username: username,
-        };
+        return { username };
+      } else {
+        const errorMessage = z.JSON.parse(response.content).error.message;
+        throw new Error(errorMessage); // Simplified error message
       }
-      // If the response is not 200, throw an error
-      throw new z.errors.Error("Invalid API Key", response.status);
+    })
+    .catch((error) => {
+      // Catching and re-throwing the error with just the message
+      throw new Error(error.message);
     });
 };
 
